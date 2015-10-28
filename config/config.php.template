@@ -26,6 +26,12 @@ $config = array();
 // $config['rewrite_url'] = null;               // A boolean indicating forced URL rewriting
 
 /*
+ * CACHE
+ */
+// $config['cache_dir'] = null;                 // To enable full page caching change this to a path to a writable directory
+// $config['cache_expire'] = 60 * 60 * 24 * 7;  // After which time period should a cached page expire? (default: 7 days)
+
+/*
  * THEME
  */
 // $config['theme'] = 'default';                // Set the theme (defaults to "default")

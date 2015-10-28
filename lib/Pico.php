@@ -118,6 +118,14 @@ class Pico
     protected $requestFile;
 
     /**
+     * Absolute path to the cached version of the page to serve
+     *
+     * @see Pico::discoverCacheFile()
+     * @var string|null
+     */
+    protected $cacheFile;
+
+    /**
      * Raw, not yet parsed contents to serve
      *
      * @see Pico::loadFileContent()
@@ -277,74 +285,127 @@ class Pico
         $this->discoverRequestFile();
         $this->triggerEvent('onRequestFile', array(&$this->requestFile));
 
-        // load raw file content
-        $this->triggerEvent('onContentLoading', array(&$this->requestFile));
+        // check cache
+        $useCache = false;
+        if ($this->getConfig('cache_dir') && file_exists($this->requestFile)) {
+            $this->cacheFile = $this->discoverCacheFile($this->requestFile);
+            if (file_exists($this->cacheFile)) {
+                $useCache = true;
+                $this->triggerEvent('onCacheHit', array($this->requestFile, &$this->cacheFile, &$useCache));
 
-        if (file_exists($this->requestFile)) {
-            $this->rawContent = $this->loadFileContent($this->requestFile);
-        } else {
-            $this->triggerEvent('on404ContentLoading', array(&$this->requestFile));
+                if ($useCache) {
+                    $cacheFileLastModTime = filemtime($this->cacheFile);
+                    $requestFileLastModTime = filemtime($this->requestFile);
 
-            header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
-            $this->rawContent = $this->load404Content($this->requestFile);
-
-            $this->triggerEvent('on404ContentLoaded', array(&$this->rawContent));
+                    $useCache = (
+                        $cacheFileLastModTime && $requestFileLastModTime
+                        && ($requestFileLastModTime < $cacheFileLastModTime)
+                        && (time() < ($cacheFileLastModTime + $this->getConfig('cache_expire')))
+                    );
+                }
+            }
         }
 
-        $this->triggerEvent('onContentLoaded', array(&$this->rawContent));
+        if (!$useCache) {
+            // load raw file content
+            $this->triggerEvent('onContentLoading', array(&$this->requestFile));
 
-        // parse file meta
-        $headers = $this->getMetaHeaders();
+            if (file_exists($this->requestFile)) {
+                $this->rawContent = $this->loadFileContent($this->requestFile);
+            } else {
+                $this->triggerEvent('on404ContentLoading', array(&$this->requestFile));
 
-        $this->triggerEvent('onMetaParsing', array(&$this->rawContent, &$headers));
-        $this->meta = $this->parseFileMeta($this->rawContent, $headers);
-        $this->triggerEvent('onMetaParsed', array(&$this->meta));
+                header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+                $this->rawContent = $this->load404Content($this->requestFile);
 
-        // parse file content
-        $this->triggerEvent('onContentParsing', array(&$this->rawContent));
+                $this->triggerEvent('on404ContentLoaded', array(&$this->rawContent));
+            }
 
-        $this->content = $this->prepareFileContent($this->rawContent);
-        $this->triggerEvent('onContentPrepared', array(&$this->content));
+            $this->triggerEvent('onContentLoaded', array(&$this->rawContent));
 
-        $this->content = $this->parseFileContent($this->content);
-        $this->triggerEvent('onContentParsed', array(&$this->content));
+            // parse file meta
+            $headers = $this->getMetaHeaders();
 
-        // read pages
-        $this->triggerEvent('onPagesLoading');
+            $this->triggerEvent('onMetaParsing', array(&$this->rawContent, &$headers));
+            $this->meta = $this->parseFileMeta($this->rawContent, $headers);
+            $this->triggerEvent('onMetaParsed', array(&$this->meta));
 
-        $this->readPages();
-        $this->sortPages();
-        $this->discoverCurrentPage();
+            // parse file content
+            $this->triggerEvent('onContentParsing', array(&$this->rawContent));
 
-        $this->triggerEvent('onPagesLoaded', array(
-            &$this->pages,
-            &$this->currentPage,
-            &$this->previousPage,
-            &$this->nextPage
-        ));
+            $this->content = $this->prepareFileContent($this->rawContent);
+            $this->triggerEvent('onContentPrepared', array(&$this->content));
 
-        // register twig
-        $this->triggerEvent('onTwigRegistration');
-        $this->registerTwig();
+            $this->content = $this->parseFileContent($this->content);
+            $this->triggerEvent('onContentParsed', array(&$this->content));
 
-        // render template
-        $this->twigVariables = $this->getTwigVariables();
-        if (isset($this->meta['template']) && $this->meta['template']) {
-            $templateName = $this->meta['template'];
+            // read pages
+            $this->triggerEvent('onPagesLoading');
+
+            $this->readPages();
+            $this->sortPages();
+            $this->discoverCurrentPage();
+
+            $this->triggerEvent('onPagesLoaded', array(
+                &$this->pages,
+                &$this->currentPage,
+                &$this->previousPage,
+                &$this->nextPage
+            ));
+
+            // register twig
+            $this->triggerEvent('onTwigRegistration');
+            $this->registerTwig();
+
+            // render template
+            $this->twigVariables = $this->getTwigVariables();
+            if (isset($this->meta['template']) && $this->meta['template']) {
+                $templateName = $this->meta['template'];
+            } else {
+                $templateName = 'index';
+            }
+            if (file_exists($this->getThemesDir() . $this->getConfig('theme') . '/' . $templateName . '.twig')) {
+                $templateName .= '.twig';
+            } else {
+                $templateName .= '.html';
+            }
+
+            $this->triggerEvent('onPageRendering', array(&$this->twig, &$this->twigVariables, &$templateName));
+
+            $output = $this->twig->render($templateName, $this->twigVariables);
+            $this->triggerEvent('onPageRendered', array(&$output));
+
+            // create cache
+            if ($this->cacheFile) {
+                $this->triggerEvent('onCacheCreating', array(&$this->cacheFile, &$output));
+
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+                $this->createCacheFile($this->cacheFile, $output);
+
+                $this->triggerEvent('onCacheCreated');
+            }
         } else {
-            $templateName = 'index';
+            // check If-Modified-Since header
+            $cacheFileLastModTime = filemtime($this->cacheFile);
+            if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+                $requestIfModifiedSince = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+                if ($requestIfModifiedSince >= $cacheFileLastModTime) {
+                    header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
+                    exit();
+                }
+            }
+
+            // load cached output
+            $this->triggerEvent('onCacheLoading', array($this->requestFile, &$this->cacheFile));
+
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $cacheFileLastModTime) . ' GMT');
+            $output = $this->loadCacheFile($this->cacheFile);
+
+            $this->triggerEvent('onCacheLoaded', array(&$output));
         }
-        if (file_exists($this->getThemesDir() . $this->getConfig('theme') . '/' . $templateName . '.twig')) {
-            $templateName .= '.twig';
-        } else {
-            $templateName .= '.html';
-        }
 
-        $this->triggerEvent('onPageRendering', array(&$this->twig, &$this->twigVariables, &$templateName));
-
-        $output = $this->twig->render($templateName, $this->twigVariables);
-        $this->triggerEvent('onPageRendered', array(&$output));
-
+        // output contents
+        $this->triggerEvent('onOutput', array(&$output));
         return $output;
     }
 
@@ -421,6 +482,8 @@ class Pico
             'site_title' => 'Pico',
             'base_url' => '',
             'rewrite_url' => null,
+            'cache_dir' => null,
+            'cache_expire' => 604800,
             'theme' => 'default',
             'date_format' => '%D %T',
             'twig_config' => array('cache' => false, 'autoescape' => false, 'debug' => false),
@@ -442,6 +505,9 @@ class Pico
         }
         if (!empty($this->config['content_dir'])) {
             $this->config['content_dir'] = $this->getAbsolutePath($this->config['content_dir']);
+        }
+        if (!empty($this->config['cache_dir'])) {
+            $this->config['cache_dir'] = $this->getAbsolutePath($this->config['cache_dir']);
         }
         if (!empty($this->config['timezone'])) {
             date_default_timezone_set($this->config['timezone']);
@@ -609,6 +675,55 @@ class Pico
     }
 
     /**
+     * Returns the absolute path to the cached version of a file
+     *
+     * This method just returns the supposed file path, it doesn't guarantee
+     * that the cache hasn't expired yet or it even exists.
+     *
+     * @param  string $file file path
+     * @return string       file path to the cached version
+     */
+    public function discoverCacheFile($file)
+    {
+        $id = substr($file, strlen($this->getConfig('content_dir')), -strlen($this->getConfig('content_ext')));
+        return $this->getConfig('cache_dir') . $id . '.html';
+    }
+
+    /**
+     * Returns the absolute path to the cached version of the page to serve
+     *
+     * @see    Pico::discoverCacheFile()
+     * @return string|null file path
+     */
+    public function getCacheFile()
+    {
+        return $this->cacheFile;
+    }
+
+    /**
+     * Creates a cache file
+     *
+     * @param  string $file    path to the cache file
+     * @param  string $content designated content of the cache file
+     * @return void
+     */
+    public function createCacheFile($file, $content)
+    {
+        file_put_contents($file, $content, LOCK_EX);
+    }
+
+    /**
+     * Returns the contents of a cache file
+     *
+     * @param  string $file path to a cache file
+     * @return string       contents of the cache
+     */
+    public function loadCacheFile($file)
+    {
+        return file_get_contents($file);
+    }
+
+    /**
      * Returns the raw contents of a file
      *
      * @param  string $file file path
@@ -644,7 +759,7 @@ class Pico
     }
 
     /**
-     * Returns the cached raw contents, either of the requested or the 404 file
+     * Returns the raw contents, either of the requested or the 404 file
      *
      * @see    Pico::loadFileContent()
      * @return string|null raw contents
