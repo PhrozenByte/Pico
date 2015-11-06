@@ -13,10 +13,8 @@
  * @author  Gilbert Pellegrom
  * @link    http://picocms.org
  * @license http://opensource.org/licenses/MIT
- * @version 0.9
+ * @version 1.0
  */
-
-$config = array();
 
 /*
  * BASIC
@@ -64,6 +62,3 @@ $config = array();
  * CUSTOM
  */
 // $config['custom_setting'] = 'Hello';         // Can be accessed by {{ config.custom_setting }} in a theme
-
-// DO NOT REMOVE THIS LINE
-return $config;

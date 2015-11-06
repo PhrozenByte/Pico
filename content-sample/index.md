@@ -17,11 +17,11 @@ and is shown as the main landing page.
 
 If you create a folder within the content folder (e.g. `content-sample/sub`)
 and put an `index.md` inside it, you can access that folder at the URL
-`http://yoursite.com/?sub`. If you want another page within the sub folder,
+`http://example.com/pico/?sub`. If you want another page within the sub folder,
 simply create a text file with the corresponding name and you will be able to
 access it (e.g. `content-sample/sub/page.md` is accessible from the URL
-`http://yoursite.com/?sub/page`). Below we've shown some examples of locations
-and their corresponing URLs:
+`http://example.com/pico/?sub/page`). Below we've shown some examples of
+locations and their corresponding URLs:
 
 <table style="width: 100%; max-width: 40em;">
     <thead>
@@ -57,6 +57,10 @@ and their corresponing URLs:
 If a file cannot be found, the file `content-sample/404.md` will be shown. You
 can add `404.md` files to any directory, so if you want to use a special error
 page for your blog, simply create `content-sample/blog/404.md`.
+
+Instead of adding your own content to the `content-sample` folder, you should
+create your own `content` directory in Pico's root directory. You can then add
+and access your contents as described above.
 
 ### Text File Markup
 
@@ -131,8 +135,8 @@ something like the following:
 ## Customization
 
 Pico is highly customizable in two different ways: On the one hand you can
-change Picos apperance by using themes, on the other hand you can add new
-functionality by using plugins. Doing the former includes changing Picos HTML,
+change Pico's appearance by using themes, on the other hand you can add new
+functionality by using plugins. Doing the former includes changing Pico's HTML,
 CSS and JavaScript, the latter mostly consists of PHP programming.
 
 This is all Greek to you? Don't worry, you don't have to spend time on these
@@ -175,16 +179,19 @@ to use in your theme. Please note that paths (e.g. `{{ base_dir }}`) and URLs
 * `{{ content }}` - The content of the current page
                     (after it has been processed through Markdown)
 * `{{ pages }}` - A collection of all the content pages in your site
-    * `{{ page.id }}`
-    * `{{ page.url }}`
-    * `{{ page.title }}`
-    * `{{ page.description }}`
-    * `{{ page.author }}`
-    * `{{ page.time }}`
-    * `{{ page.date }}`
-    * `{{ page.date_formatted }}`
-    * `{{ page.raw_content }}`
-    * `{{ page.meta }}`
+    * `{{ page.id }}` - The relative path to the content file (unique ID)
+    * `{{ page.url }}` - The URL to the page
+    * `{{ page.title }}` - The title of the page (YAML header)
+    * `{{ page.description }}` - The description of the page (YAML header)
+    * `{{ page.author }}` - The author of the page (YAML header)
+    * `{{ page.time }}` - The timestamp derived from the `Date` header
+    * `{{ page.date }}` - The date of the page (YAML header)
+    * `{{ page.date_formatted }}` - The formatted date of the page
+    * `{{ page.raw_content }}` - The raw, not yet parsed contents of the page;
+                                 use Twigs `content` filter to get the parsed
+                                 contents of a page by passing its unique ID
+                                 (e.g. `{{ "sub/page"|content }}`)
+    * `{{ page.meta }}`- The meta values of the page
 * `{{ prev_page }}` - The data of the previous page (relative to `current_page`)
 * `{{ current_page }}` - The data of the current page
 * `{{ next_page }}` - The data of the next page (relative to `current_page`)
@@ -198,28 +205,28 @@ Pages can be used like the following:
         {% endfor %}
     </ul>
 
-You can use different templates for different content files by specifing the
+You can use different templates for different content files by specifying the
 `Template` meta header. Simply add e.g. `Template: blog-post` to a content file
 and Pico will use the `blog-post.twig` file in your theme folder to render
 the page.
 
-You don't have to create your own theme if Picos default theme isn't sufficient
-for you, you can use one of the great themes third-party developers and
-designers created in the past. As with plugins, you can find themes in
-[our Wiki](https://github.com/picocms/Pico/wiki/Pico-Themes).
+You don't have to create your own theme if Pico's default theme isn't
+sufficient for you, you can use one of the great themes third-party developers
+and designers created in the past. As with plugins, you can find themes in
+[our Wiki][WikiThemes].
 
 ### Plugins
 
 #### Plugins for users
 
-Officially tested plugins can be found at http://pico.dev7studios.com/plugins,
-but there are many awesome third-party plugins out there! A good start point
-for discovery is [our Wiki](https://github.com/picocms/Pico/wiki/Pico-Plugins).
+Officially tested plugins can be found at http://picocms.org/plugins.html, but
+there are many awesome third-party plugins out there! A good start point for
+discovery is [our Wiki][WikiPlugins].
 
 Pico makes it very easy for you to add new features to your website. Simply
 upload the files of the plugin to the `plugins/` directory and you're done.
 Depending on the plugin you've installed, you may have to go through some more
-steps (e.g. specifing config variables), the plugin docs or `README` file will
+steps (e.g. specifying config variables), the plugin docs or `README` file will
 explain what to do.
 
 Plugins which were written to work with Pico 1.0 can be enabled and disabled
@@ -231,10 +238,10 @@ replace `false` with `true`.
 #### Plugins for developers
 
 You're a plugin developer? We love you guys! You can find tons of information
-about how to develop plugins at http://picocms.org/plugin-dev.html. If you'd
-developed a plugin for Pico 0.9 and older, you probably want to upgrade it
+about how to develop plugins at http://picocms.org/plugin-dev.html. If you've
+developed a plugin for Pico 0.9 or older, you probably want to upgrade it
 to the brand new plugin system introduced with Pico 1.0. Please refer to the
-[Upgrade section of the docs](http://picocms.org/plugin-dev.html#upgrade).
+[upgrade section of the docs][PluginUpgrade].
 
 ## Config
 
@@ -246,16 +253,16 @@ uncomment the setting and set your custom value.
 
 ### URL Rewriting
 
-Picos default URLs (e.g. %base_url%/?sub/page) already are very user friendly.
-Pico anyway offers you an URL rewrite feature to make URLs even more user
-friendly (e.g. %base_url%/sub/page).
+Pico's default URLs (e.g. %base_url%/?sub/page) already are very user-friendly.
+Additionally, Pico offers you a URL rewrite feature to make URLs even more
+user-friendly (e.g. %base_url%/sub/page).
 
 If you're using the Apache web server, URL rewriting probably already is
 enabled - try it yourself, click on the [second URL](%base_url%/sub/page). If
 you get an error message from your web server, please make sure to enable the
-`mod_rewrite` module. Assumed the second URL works, but Pico still shows no
-rewritten URLs, force URL rewriting by setting `$config['rewrite_url'] = true;`
-in your `config/config.php`.
+[`mod_rewrite` module][ModRewrite]. Assuming the second URL works, but Pico
+still shows no rewritten URLs, force URL rewriting by setting
+`$config['rewrite_url'] = true;` in your `config/config.php`.
 
 If you're using Nginx, you can use the following configuration to enable
 URL rewriting. Don't forget to adjust the path (`/pico/`; line `1` and `4`)
@@ -269,8 +276,11 @@ setting `$config['rewrite_url'] = true;` in your `config/config.php`.
 
 ## Documentation
 
-For more help have a look at the Pico documentation at
-[http://picocms.org/docs](http://picocms.org/docs)
+For more help have a look at the Pico documentation at http://picocms.org/docs.
 
-[Twig]: http://twig.sensiolabs.org/documentation
 [Markdown]: http://daringfireball.net/projects/markdown/syntax
+[Twig]: http://twig.sensiolabs.org/documentation
+[WikiThemes]: https://github.com/picocms/Pico/wiki/Pico-Themes
+[WikiPlugins]: https://github.com/picocms/Pico/wiki/Pico-Plugins
+[PluginUpgrade]: http://picocms.org/plugin-dev.html#upgrade
+[ModRewrite]: https://httpd.apache.org/docs/current/mod/mod_rewrite.html
