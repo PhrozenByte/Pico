@@ -46,6 +46,12 @@ if ! parse_version "$TRAVIS_TAG"; then
     exit 1
 fi
 
+echo "Deploying Pico $VERSION_MILESTONE ($VERSION_STABILITY)..."
+printf 'VERSION_FULL="%s"\n' "$VERSION_FULL"
+printf 'VERSION_NAME="%s"\n' "$VERSION_NAME"
+printf 'VERSION_ID="%s"\n' "$VERSION_ID"
+echo
+
 # clone repo
 github-clone.sh "$DEPLOYMENT_DIR" "https://github.com/$DEPLOY_REPO_SLUG.git" "$DEPLOY_REPO_BRANCH"
 
@@ -56,14 +62,11 @@ github-setup.sh
 
 # generate phpDocs
 if [ "$DEPLOY_PHPDOC_RELEASES" == "true" ]; then
-    # get current Pico milestone
-    MILESTONE="Pico $VERSION_MILESTONE"
-
     # generate phpDocs
     generate-phpdoc.sh \
         "$TRAVIS_BUILD_DIR/.phpdoc.xml" \
         "-" "$DEPLOYMENT_DIR/phpDoc/$DEPLOYMENT_ID" \
-        "$MILESTONE API Documentation ($TRAVIS_TAG)"
+        "Pico $VERSION_MILESTONE API Documentation ($TRAVIS_TAG)"
 
     if [ -n "$(git status --porcelain "$DEPLOYMENT_DIR/phpDoc/$DEPLOYMENT_ID")" ]; then
         # update phpDoc list
@@ -79,7 +82,7 @@ if [ "$DEPLOY_PHPDOC_RELEASES" == "true" ]; then
 fi
 
 # don't update version badge, version file and cloc statistics for pre-releases
-if [ "$VERSION_STABILITY" != "stable" ]; then
+if [ "$VERSION_STABILITY" == "stable" ]; then
     # update version badge
     if [ "$DEPLOY_VERSION_BADGE" == "true" ]; then
         generate-badge.sh \
