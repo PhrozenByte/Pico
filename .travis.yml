@@ -36,6 +36,8 @@ jobs:
         - create-release.sh "$TRAVIS_BUILD_DIR/pico-release-$TRAVIS_TAG.tar.gz"
       deploy:
         provider: releases
+        edge:
+          branch: releases-improvements
         api_key: ${GITHUB_OAUTH_TOKEN}
         file: pico-release-$TRAVIS_TAG.tar.gz
         skip_cleanup: true
@@ -43,8 +45,6 @@ jobs:
         draft: true
         on:
           tags: true
-        edge:
-          branch: releases-improvements
 
   # Ignore nightly build failures
   allow_failures:
