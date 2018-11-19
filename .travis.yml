@@ -24,6 +24,7 @@ jobs:
 
     # Deployment stage
     - stage: deploy
+      if: tag IS present 
       sudo: required
       install:
         - '[ "$TRAVIS_PULL_REQUEST" == "false" ] || travis_terminate 0'
@@ -43,8 +44,6 @@ jobs:
         skip_cleanup: true
         name: Version ${TRAVIS_TAG:1}
         draft: true
-        on:
-          tags: true
 
   # Ignore nightly build failures
   allow_failures:
