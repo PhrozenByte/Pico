@@ -1,3 +1,12 @@
+> :exclamation: :exclamation: **THIS IS AN *UNSUPPORTED* FORK** :exclamation: :exclamation:
+>
+> The [`gh-pages` branch of the `PhrozenByte/Pico` repo](https://github.com/PhrozenByte/Pico/tree/gh-pages) is an **unofficial** and **not supported** fork of the official [`picocms/picocms.github.io` repo](https://github.com/picocms/picocms.github.io). Even though this website publishes releases that have never been published officially for Pico, it is **not** a continuation of Pico.
+>
+> Also see the end of life notice in the official [`picocms/Pico` repo](https://github.com/picocms/Pico).
+>
+> :exclamation: :exclamation: **THIS IS AN *UNSUPPORTED* FORK** :exclamation: :exclamation:
+
+
 Pico
 ====
 
