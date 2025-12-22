@@ -1770,9 +1770,9 @@ class Pico
     protected function readPages(): void
     {
         $contentDir = $this->getConfig('content_dir');
+        $contentDirLength = strlen($contentDir);
         $contentExt = $this->getConfig('content_ext');
-        $contentDirLen = strlen($contentDir);
-        $contentExtLen = strlen($contentExt);
+        $contentExtLength = strlen($contentExt);
 
         $this->pages = [];
         $files = $this->getFiles($contentDir, $contentExt, self::SORT_NONE);
@@ -1783,7 +1783,7 @@ class Pico
                 continue;
             }
 
-            $id = substr($file, $contentDirLen, -$contentExtLen);
+            $id = substr($file, $contentDirLength, -$contentExtLength);
 
             // trigger onSinglePageLoading event
             // skip inaccessible pages (e.g. drop "sub.md" if "sub/index.md" exists) by default
