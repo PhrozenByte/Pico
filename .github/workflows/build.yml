@@ -1,0 +1,40 @@
+name: Build Pico CMS
+
+on:
+    push:
+        branches: [ 'master' ]
+        tags: [ 'v*.*.*' ]
+    workflow_call: {}
+
+jobs:
+    build:
+        name: Build Pico CMS
+
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        env:
+            PHP_VERSION: '7.2'
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v6
+
+            -   name: Setup Pico CMS build environment
+                uses: ./.github/actions/setup
+                with:
+                    php-version: ${{ env.PHP_VERSION }}
+
+            -   name: Build Pico release packages
+                run: |
+                    ./.build/build.sh
+
+            -   name: Upload Pico release packages
+                uses: actions/upload-artifact@v4
+                with:
+                    name: pico-release
+                    path: |
+                        pico-release-*.tar.gz
+                        pico-release-*.zip
+                    compression-level: 0

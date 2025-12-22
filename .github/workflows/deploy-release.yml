@@ -34,12 +34,17 @@ jobs:
                 with:
                     path: ${{ env.BUILD_DIR }}
 
-            -   name: Install Pico CMS
-                uses: ./build/.github/actions/install
+            -   name: Setup Pico CMS build environment
+                uses: ./build/.github/actions/setup
                 with:
                     path: ${{ env.BUILD_DIR }}
                     php-version: ${{ env.PHP_VERSION }}
                     php-tools: phpdoc
+
+            -   name: Install Pico CMS
+                uses: ./build/.github/actions/install
+                with:
+                    path: ${{ env.BUILD_DIR }}
 
             -   name: Parse Pico version
                 run: |

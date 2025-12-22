@@ -40,11 +40,14 @@ jobs:
             -   name: Checkout repository
                 uses: actions/checkout@v6
 
-            -   name: Install Pico CMS
-                uses: ./.github/actions/install
+            -   name: Setup Pico CMS build environment
+                uses: ./.github/actions/setup
                 with:
                     php-version: ${{ env.PHP_VERSION }}
                     php-tools: phpcs
+
+            -   name: Install Pico CMS
+                uses: ./.github/actions/install
 
             -   name: Check Pico version
                 if: ${{ github.ref_type == 'tag' }}
