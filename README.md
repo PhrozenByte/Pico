@@ -1,11 +1,19 @@
+> :exclamation: :exclamation: **END OF LIFE NOTICE** :exclamation: :exclamation:
+>
+> Development of Pico has stopped a very long time ago. **We strongly advise against using Pico for new websites.** You can keep using Pico for existing websites though, it has **no known security issues**. However, please note that you will ultimately run into issues, because Pico wasn't designed for modern PHP versions. You can try the last [`v3.0.0-alpha.2` release](https://github.com/picocms/Pico/releases/tag/v3.0.0-alpha.2), or use the [`pico-3.0` branch](https://github.com/picocms/Pico/tree/pico-3.0). They are as stable as the last "stable" releases, but just didn't make it through the release process before development was abandoned.
+>
+> If you're about to create a new website and want to use a flat file CMS, check out some of Pico's amazing alternatives, like [Grav CMS](https://getgrav.org/), [HTMLy](https://www.htmly.com/), [Automad](https://automad.org/), or [Typemill](https://typemill.net/).
+>
+> If you're interested in taking over Pico's development, please don't hesitate to contact us by creating a [new Issue](https://github.com/picocms/Pico/issues/new) here on GitHub. Please provide some *brief* information about the extent of your commitment, your motivation, and your experience with Pico, PHP programming, and Open Source Software development in general. We're happy to help you take over the baton, but unfortunately are no longer able to maintain this project.
+>
+> :exclamation: :exclamation: **END OF LIFE NOTICE** :exclamation: :exclamation:
+
 Pico
 ====
 
 [![License](https://picocms.github.io/badges/pico-license.svg)](https://github.com/picocms/Pico/blob/master/LICENSE.md)
 [![Version](https://picocms.github.io/badges/pico-version.svg)](https://github.com/picocms/Pico/releases/latest)
-[![Build Status](https://api.travis-ci.org/picocms/Pico.svg?branch=master)](https://travis-ci.org/picocms/Pico)
 [![Libera.Chat](https://picocms.github.io/badges/pico-chat.svg)](https://web.libera.chat/#picocms)
-[![Open Bounties on Bountysource](https://www.bountysource.com/badge/team?team_id=198139&style=bounties_received)](https://www.bountysource.com/teams/picocms)
 
 Pico is a stupidly simple, blazing fast, flat file CMS.
 
@@ -206,21 +214,6 @@ You want to contribute to Pico? We really appreciate that! You can help make Pic
 
 By contributing to Pico, you accept and agree to the *Developer Certificate of Origin* for your present and future contributions submitted to Pico. Please refer to the ["Developer Certificate of Origin" section in our `CONTRIBUTING.md`][ContributionGuidelinesDCO].
 
-You don't have time to contribute code to Pico, but still want to "stand a coffee" for the ones who do? You can contribute monetary to Pico using [Bountysource][], a crowd funding website that focuses on individual issues and feature requests. Just refer to the "Bounties and Fundraisers" section below for more info.
-
-Bounties and Fundraisers
-------------------------
-
-Pico uses [Bountysource][] to allow monetary contributions to the project. Bountysource is a crowd funding website that focuses on individual issues and feature requests in Open Source projects using micropayment. Users, or "Backers", can pledge money for fixing a specific issue, implementing new features, or developing a new plugin or theme. Open source software developers, or "Bounty Hunters", can then pick up and solve these tasks to earn the money.
-
-Obviously this won't allow a developer to replace a full time job, it's rather aiming to "stand a coffee". However, it helps bringing users and developers closer together, and shows developers what users want and how much they care about certain things. Nevertheless you can still donate money to the project itself, as an easy way to say "Thank You" and to support Pico.
-
-If you want to encourage developers to [fix a specific issue][Issues] or implement a feature, simply [pledge a new bounty][Bountysource] or back an existing one.
-
-As a developer you can pick up a bounty by simply contributing to Pico (please refer to the "Contributing" section above). You don't have to be a official Pico Contributor! Pico is a Open Source project, anyone can open [pull requests][PullRequests] and claim bounties.
-
-Official Pico Contributors won't claim bounties on their own behalf, Pico will never take any money out of Bountysource. All money collected by Pico is used to pledge new bounties or to support projects Pico depends on.
-
 [Composer]: https://getcomposer.org/
 [LatestRelease]: https://github.com/picocms/Pico/releases/latest
 [PicoGit]: https://github.com/picocms/Pico
@@ -254,4 +247,3 @@ Official Pico Contributors won't claim bounties on their own behalf, Pico will n
 [EditInlineDocs]: https://github.com/picocms/Pico/edit/master/content-sample/index.md
 [EditUserDocs]: https://github.com/picocms/picocms.github.io/tree/master/_docs
 [EditDevDocs]: https://github.com/picocms/picocms.github.io/tree/master/_development
-[Bountysource]: https://www.bountysource.com/teams/picocms
