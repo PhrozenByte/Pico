@@ -15,6 +15,20 @@ redirect_from: /download.html
 ---
 
 <p class="aligncenter" style="font-size:24px;line-height:24px;font-weight:900;">
+    ❗ ❗ THIS IS AN <em>UNSUPPORTED</em> FORK ❗ ❗
+</p>
+
+The [`PhrozenByte/Pico` repo](https://github.com/PhrozenByte/Pico) is an **unofficial** and **not supported** fork of the official [`picocms/Pico` repo](https://github.com/picocms/Pico). Even though it is also available on Packagist and publishes releases that have never been published officially for Pico, it is **not** a continuation of Pico.
+
+Also see the end of life notice below.
+
+<p class="aligncenter" style="font-size:24px;line-height:24px;font-weight:900;">
+    ❗ ❗ THIS IS AN <em>UNSUPPORTED</em> FORK ❗ ❗
+</p>
+
+---
+
+<p class="aligncenter" style="font-size:24px;line-height:24px;font-weight:900;">
     ❗ ❗ END OF LIFE NOTICE ❗ ❗
 </p>
 
