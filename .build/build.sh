@@ -45,19 +45,19 @@ fi
 
 # parameters
 BUILD_NAME="pico"
-BUILD_PROJECT="picocms/pico"
+BUILD_PROJECT="phrozenbyte/pico"
 BUILD_VERSION=
 
 PICO_COMPOSER_NAME="pico-composer"
-PICO_COMPOSER_PROJECT="picocms/pico-composer"
+PICO_COMPOSER_PROJECT="phrozenbyte/pico-composer"
 PICO_COMPOSER_DIR=
 
 PICO_THEME_NAME="pico-theme"
-PICO_THEME_PROJECT="picocms/pico-theme"
+PICO_THEME_PROJECT="phrozenbyte/pico-theme"
 PICO_THEME_DIR=
 
 PICO_DEPRECATED_NAME="pico-deprecated"
-PICO_DEPRECATED_PROJECT="picocms/pico-deprecated"
+PICO_DEPRECATED_PROJECT="phrozenbyte/pico-deprecated"
 PICO_DEPRECATED_DIR=
 
 PHP_VERSION="7.2"

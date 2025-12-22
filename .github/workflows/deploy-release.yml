@@ -5,8 +5,8 @@ on:
         types: [ 'published' ]
 
 env:
-    WEBSITE_REPO_SLUG: picocms/picocms.github.io
-    WEBSITE_REPO_BRANCH: master
+    WEBSITE_REPO_SLUG: PhrozenByte/Pico
+    WEBSITE_REPO_BRANCH: gh-pages
     CI_TOOLS_SETUP: https://raw.githubusercontent.com/picocms/ci-tools/master/setup.sh
 
 jobs:

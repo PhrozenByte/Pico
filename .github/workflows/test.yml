@@ -2,9 +2,7 @@ name: Test Pico CMS
 
 on:
     push:
-        branches:
-            - 'master'
-            - 'pico-3.0'
+        branches: [ 'master' ]
         tags: [ 'v*.*.*' ]
     workflow_call: {}
 

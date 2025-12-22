@@ -1,7 +1,7 @@
 {
-    "name": "picocms/pico",
+    "name": "phrozenbyte/pico",
     "type": "library",
-    "description": "Pico is a flat file CMS, this means there is no administration backend and database to deal with. You simply create .md files in the \"content\" folder and that becomes a page.",
+    "description": "This is PhrozenByte's fork of Pico. Pico is a flat file CMS, this means there is no administration backend and database to deal with. You simply create .md files in the \"content\" folder and that becomes a page.",
     "keywords": ["pico", "picocms", "pico-cms", "simple", "flat-file", "cms", "content-management", "website", "markdown-to-html", "php", "markdown", "yaml", "twig" ],
     "homepage": "https://picocms.org/",
     "license": "MIT",
@@ -39,8 +39,8 @@
         "erusev/parsedown-extra": "0.8.1"
     },
     "suggest": {
-        "picocms/pico-theme": "Pico requires a theme to actually display the contents of your website. This is Pico's official default theme.",
-        "picocms/pico-deprecated": "PicoDeprecated's purpose is to maintain backward compatibility to older versions of Pico.",
+        "phrozenbyte/pico-theme": "Pico requires a theme to actually display the contents of your website. This is Pico's official default theme.",
+        "phrozenbyte/pico-deprecated": "PicoDeprecated's purpose is to maintain backward compatibility to older versions of Pico.",
         "picocms/composer-installer": "This Composer plugin is responsible for installing Pico plugins and themes using the Composer package manager."
     },
     "autoload": {
@@ -55,8 +55,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1.x-dev",
-            "dev-pico-3.0": "3.0.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }
