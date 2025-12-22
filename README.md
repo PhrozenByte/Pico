@@ -1,3 +1,11 @@
+> :exclamation: :exclamation: **THIS IS AN *UNSUPPORTED* FORK** :exclamation: :exclamation:
+>
+> The [`PhrozenByte/Pico` repo](https://github.com/PhrozenByte/Pico) is an **unofficial** and **not supported** fork of the official [`picocms/Pico` repo](https://github.com/picocms/Pico). Even though it is also available on Packagist and publishes releases that have never been published officially for Pico, it is **not** a continuation of Pico.
+>
+> Also see the end of life notice below.
+>
+> :exclamation: :exclamation: **THIS IS AN *UNSUPPORTED* FORK** :exclamation: :exclamation:
+
 > :exclamation: :exclamation: **END OF LIFE NOTICE** :exclamation: :exclamation:
 >
 > Development of Pico has stopped a very long time ago. **We strongly advise against using Pico for new websites.** You can keep using Pico for existing websites though, it has **no known security issues**. However, please note that you will ultimately run into issues, because Pico wasn't designed for modern PHP versions. You can try the last [`v3.0.0-alpha.2` release](https://github.com/picocms/Pico/releases/tag/v3.0.0-alpha.2), or use the [`pico-3.0` branch](https://github.com/picocms/Pico/tree/pico-3.0). They are as stable as the last "stable" releases, but just didn't make it through the release process before development was abandoned.
