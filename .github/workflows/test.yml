@@ -24,6 +24,10 @@ jobs:
                     - '7.4'
                     - '8.0'
                     - '8.1'
+                    - '8.2'
+                    - '8.3'
+                    - '8.4'
+                    - '8.5'
                     - 'nightly'
             fail-fast: false
 
@@ -34,7 +38,7 @@ jobs:
 
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v2
+                uses: actions/checkout@v6
 
             -   name: Install Pico CMS
                 uses: ./.github/actions/install
