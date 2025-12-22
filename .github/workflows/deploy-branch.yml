@@ -20,7 +20,7 @@ jobs:
             contents: write
 
         env:
-            PHP_VERSION: '7.4'
+            PHP_VERSION: '8.5'
             BUILD_DIR: ./build
             WEBSITE_DIR: ./website
 
@@ -40,7 +40,7 @@ jobs:
                 with:
                     path: ${{ env.BUILD_DIR }}
                     php-version: ${{ env.PHP_VERSION }}
-                    php-tools: phpdoc:3.3
+                    php-tools: phpdoc
 
             -   name: Read Pico milestone
                 working-directory: ${{ env.BUILD_DIR }}
