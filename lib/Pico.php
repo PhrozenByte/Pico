@@ -1076,16 +1076,16 @@ class Pico
      * @see Pico::setConfig()
      * @see Pico::loadConfig()
      *
-     * @param string $configName optional name of a config variable
-     * @param mixed  $default    optional default value to return when the
-     *     named config variable doesn't exist
+     * @param string|null $configName optional name of a config variable
+     * @param mixed  $default         optional default value to return when
+     *     the named config variable doesn't exist
      *
      * @return mixed if no name of a config variable has been supplied, the
      *     config array is returned; otherwise it returns either the value of
      *     the named config variable, or, if the named config variable doesn't
      *     exist, the provided default value or NULL
      */
-    public function getConfig(string $configName = null, $default = null)
+    public function getConfig(?string $configName = null, $default = null)
     {
         if ($configName !== null) {
             return isset($this->config[$configName]) ? $this->config[$configName] : $default;
@@ -1620,7 +1620,7 @@ class Pico
      *
      * @return string prepared Markdown contents
      */
-    public function prepareFileContent(string $rawContent, array $meta = [], string $pageId = null): string
+    public function prepareFileContent(string $rawContent, array $meta = [], ?string $pageId = null): string
     {
         // remove meta header
         $metaHeaderPattern = "/^(?:\xEF\xBB\xBF)?(\/(\*)|---)[[:blank:]]*(?:\r)?\n"
@@ -1643,7 +1643,7 @@ class Pico
      *
      * @return string substituted Markdown contents
      */
-    public function substituteFileContent(string $markdown, array $meta = [], string $pageId = null): string
+    public function substituteFileContent(string $markdown, array $meta = [], ?string $pageId = null): string
     {
         $variables = [];
 
@@ -2713,15 +2713,15 @@ class Pico
     /**
      * Makes a relative path absolute to Pico's root dir
      *
-     * @param string $path     relative or absolute path
-     * @param string $basePath treat relative paths relative to the given path;
-     *     defaults to Pico::$rootDir
-     * @param bool   $endSlash whether to add a trailing slash to the absolute
-     *     path or not (defaults to TRUE)
+     * @param string $path          relative or absolute path
+     * @param string|null $basePath treat relative paths relative to the given
+     *     path; defaults to NULL, yielding Pico::$rootDir
+     * @param bool   $endSlash      whether to add a trailing slash to the
+     *     absolute path or not (defaults to TRUE)
      *
      * @return string absolute path
      */
-    public function getAbsolutePath(string $path, string $basePath = null, bool $endSlash = true): string
+    public function getAbsolutePath(string $path, ?string $basePath = null, bool $endSlash = true): string
     {
         if ($basePath === null) {
             $basePath = $this->getRootDir();
@@ -2801,15 +2801,15 @@ class Pico
      * Please note that URLs starting with a slash are considered absolute URLs
      * even though they don't include a scheme and host.
      *
-     * @param string $url      relative or absolute URL
-     * @param string $baseUrl  treat relative URLs relative to the given URL;
-     *     defaults to Pico::getBaseUrl()
-     * @param bool   $endSlash whether to add a trailing slash to the absolute
-     *     URL or not (defaults to TRUE)
+     * @param string $url          relative or absolute URL
+     * @param string|null $baseUrl treat relative URLs relative to the given
+     *     URL; defaults to NULL, yielding Pico::getBaseUrl()
+     * @param bool   $endSlash     whether to add a trailing slash to the
+     *     absolute URL or not (defaults to TRUE)
      *
      * @return string absolute URL
      */
-    public function getAbsoluteUrl(string $url, string $baseUrl = null, bool $endSlash = true): string
+    public function getAbsoluteUrl(string $url, ?string $baseUrl = null, bool $endSlash = true): string
     {
         if (($url[0] !== '/') && !preg_match('#^[A-Za-z][A-Za-z0-9+\-.]*://#', $url)) {
             $url = (($baseUrl !== null) ? $baseUrl : $this->getBaseUrl()) . $url;
