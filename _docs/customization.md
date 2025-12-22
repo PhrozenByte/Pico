@@ -112,7 +112,7 @@ Plugins which were written to work with Pico 1.0 and later can be enabled and di
 
 You're a plugin developer? We love you people! Check out Pico's `DummyPlugin` for the complete list of events Pico provides. If you've developed a plugin before and want to upgrade it to Pico's latest version, refer to the upgrade docs.
 
-[Twig]: https://twig.symfony.com/doc/1.x/
+[Twig]: https://twig.symfony.com/doc/
 [UnixTimestamp]: https://en.wikipedia.org/wiki/Unix_timestamp
 [Composer]: https://getcomposer.org/
 [FeaturesHttpParams]: {{ site.github.url }}/in-depth/features/http-params/
