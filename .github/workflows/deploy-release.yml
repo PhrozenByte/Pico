@@ -30,7 +30,7 @@ jobs:
                     echo "CI_TOOLS_PATH=$CI_TOOLS_PATH" | tee -a "$GITHUB_ENV"
 
             -   name: Checkout repository
-                uses: actions/checkout@v2
+                uses: actions/checkout@v6
                 with:
                     path: ${{ env.BUILD_DIR }}
 
@@ -39,7 +39,7 @@ jobs:
                 with:
                     path: ${{ env.BUILD_DIR }}
                     php-version: ${{ env.PHP_VERSION }}
-                    php-tools: phpdoc
+                    php-tools: phpdoc:3.3
 
             -   name: Parse Pico version
                 run: |
@@ -57,7 +57,7 @@ jobs:
                         | tee -a "$GITHUB_ENV"
 
             -   name: Checkout website repository
-                uses: actions/checkout@v2
+                uses: actions/checkout@v6
                 with:
                     repository: ${{ env.WEBSITE_REPO_SLUG }}
                     ref: ${{ env.WEBSITE_REPO_BRANCH }}
@@ -83,7 +83,7 @@ jobs:
                         "Pico $PICO_VERSION_FULL" "$(date +%s)"
 
             -   name: Commit phpDoc class docs updates
-                uses: stefanzweifel/git-auto-commit-action@v4
+                uses: stefanzweifel/git-auto-commit-action@v7
                 with:
                     repository: ${{ env.WEBSITE_DIR }}
                     file_pattern: >-
@@ -108,7 +108,7 @@ jobs:
 
             -   name: Commit version badge
                 if: ${{ env.PICO_VERSION_STABILITY == 'stable' }}
-                uses: stefanzweifel/git-auto-commit-action@v4
+                uses: stefanzweifel/git-auto-commit-action@v7
                 with:
                     repository: ${{ env.WEBSITE_DIR }}
                     file_pattern: >-
@@ -131,7 +131,7 @@ jobs:
 
             -   name: Commit version file
                 if: ${{ env.PICO_VERSION_STABILITY == 'stable' }}
-                uses: stefanzweifel/git-auto-commit-action@v4
+                uses: stefanzweifel/git-auto-commit-action@v7
                 with:
                     repository: ${{ env.WEBSITE_DIR }}
                     file_pattern: >-
@@ -161,7 +161,7 @@ jobs:
 
             -   name: Commit cloc statistics
                 if: ${{ env.PICO_VERSION_STABILITY == 'stable' }}
-                uses: stefanzweifel/git-auto-commit-action@v4
+                uses: stefanzweifel/git-auto-commit-action@v7
                 with:
                     repository: ${{ env.WEBSITE_DIR }}
                     file_pattern: >-
