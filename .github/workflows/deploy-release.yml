@@ -21,7 +21,7 @@ jobs:
             PHP_VERSION: '8.5'
             BUILD_DIR: ./build
             WEBSITE_DIR: ./website
-            CLOC_SOURCE: https://github.com/AlDanial/cloc/releases/download/1.92/cloc-1.92.pl
+            CLOC_SOURCE: https://github.com/AlDanial/cloc/releases/download/v2.06/cloc-2.06.pl
 
         steps:
             -   name: Setup CI tools

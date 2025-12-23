@@ -480,7 +480,7 @@ if [ -n "$PUBLISH" ]; then
     gh release create "$VERSION" \
         --title "Version $VERSION_FULL" \
         --generate-notes \
-        "$GITHUB_PRERELEASE" \
+        $GITHUB_PRERELEASE \
         "$APP_DIR/$ARCHIVE_FILENAME.tar.gz" \
         "$APP_DIR/$ARCHIVE_FILENAME.zip"
 fi

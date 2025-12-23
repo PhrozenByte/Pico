@@ -410,9 +410,9 @@ class DummyPlugin extends AbstractPicoPlugin
      * @param array|null &$nextPage     data of the next page
      */
     public function onCurrentPageDiscovered(
-        array &$currentPage = null,
-        array &$previousPage = null,
-        array &$nextPage = null
+        ?array &$currentPage = null,
+        ?array &$previousPage = null,
+        ?array &$nextPage = null
     ): void {
         // your code
     }
