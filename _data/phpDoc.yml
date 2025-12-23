@@ -118,3 +118,7 @@
   type: branch
   title: <code>pico-3.0</code> branch
   last_update: 1616538123
+- id: v3.0.0
+  type: version
+  title: Pico 3.0.0
+  last_update: 1766449761
