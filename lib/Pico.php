@@ -68,7 +68,7 @@ class Pico
      *
      * @var string
      */
-    public const VERSION = '3.0.0-beta.1';
+    public const VERSION = '3.0.0';
 
     /**
      * Pico version ID
